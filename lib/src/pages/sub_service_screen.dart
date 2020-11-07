@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_healthcare_app/src/model/service.dart';
 import 'package:flutter_healthcare_app/src/model/sub_service.dart';
+import 'package:flutter_healthcare_app/src/pages/map_screen.dart';
 
 import 'package:flutter_healthcare_app/src/theme/light_color.dart';
 import 'package:flutter_healthcare_app/src/viewModel/service_view_model.dart';
@@ -121,12 +122,19 @@ class _SubServicePageState extends State<SubServicePage> {
             ),
         itemCount: serviceList != null ?serviceList.length :0,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text('${serviceList[index].servicecentername}'),
-            leading: Icon(Icons.star),
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              color: ColorResources.themered,
+          return GestureDetector(
+            onTap: (){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => MapScreen(serviceList)));
+
+            },
+            child: ListTile(
+              title: Text('${serviceList[index].servicecentername}'),
+              leading: Icon(Icons.star),
+              trailing: Icon(
+                Icons.arrow_forward_ios,
+                color: ColorResources.themered,
+              ),
             ),
           );
           Divider();
