@@ -7,6 +7,14 @@ class ContactInfo extends StatefulWidget {
 }
 
 class _ContactInfoState extends State<ContactInfo> {
+  List<Widget> emergencyWidgets = List<Widget>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    emergencyWidgets.add(emergencyWidgetItem(context));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +29,7 @@ class _ContactInfoState extends State<ContactInfo> {
         centerTitle: true,
         elevation: 0,
         title: Text(
-          'Contacat Information',
+          'Contact Information',
           style: TextStyle(fontSize: 14, color: Colors.black54),
         ),
       ),
@@ -62,14 +70,14 @@ class _ContactInfoState extends State<ContactInfo> {
                     color: ColorResources.black,
                     fontWeight: FontWeight.normal),
               ),
-              new Padding(padding: EdgeInsets.only(top: 10.0)),
-              new TextFormField(
-                decoration: new InputDecoration(
+              Padding(padding: EdgeInsets.only(top: 10.0)),
+              TextFormField(
+                decoration: InputDecoration(
                   labelText: "My postal code",
                   fillColor: Colors.white,
-                  border: new OutlineInputBorder(
-                    borderRadius: new BorderRadius.circular(9.0),
-                    borderSide: new BorderSide(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(),
                   ),
                   //fillColor: Colors.green
                 ),
@@ -81,18 +89,18 @@ class _ContactInfoState extends State<ContactInfo> {
                   }
                 },
                 keyboardType: TextInputType.number,
-                style: new TextStyle(
+                style: TextStyle(
                   fontFamily: "Poppins",
                 ),
               ),
-              new Padding(padding: EdgeInsets.only(top: 7.0)),
-              new TextFormField(
-                decoration: new InputDecoration(
+              Padding(padding: EdgeInsets.only(top: 7.0)),
+              TextFormField(
+                decoration: InputDecoration(
                   labelText: "My Phone number",
                   fillColor: Colors.white,
-                  border: new OutlineInputBorder(
-                    borderRadius: new BorderRadius.circular(9.0),
-                    borderSide: new BorderSide(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(),
                   ),
                   //fillColor: Colors.green
                 ),
@@ -104,18 +112,18 @@ class _ContactInfoState extends State<ContactInfo> {
                   }
                 },
                 keyboardType: TextInputType.number,
-                style: new TextStyle(
+                style: TextStyle(
                   fontFamily: "Poppins",
                 ),
               ),
-              new Padding(padding: EdgeInsets.only(top: 7.0)),
-              new TextFormField(
-                decoration: new InputDecoration(
+              Padding(padding: EdgeInsets.only(top: 7.0)),
+              TextFormField(
+                decoration: InputDecoration(
                   labelText: "My Address",
                   fillColor: Colors.white,
-                  border: new OutlineInputBorder(
-                    borderRadius: new BorderRadius.circular(9.0),
-                    borderSide: new BorderSide(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    borderSide: BorderSide(),
                   ),
                   //fillColor: Colors.green
                 ),
@@ -127,83 +135,109 @@ class _ContactInfoState extends State<ContactInfo> {
                   }
                 },
                 keyboardType: TextInputType.text,
-                style: new TextStyle(
+                style: TextStyle(
                   fontFamily: "Poppins",
                 ),
               ),
-              new Padding(padding: EdgeInsets.only(top: 10.0)),
-              Text('On emergency', style: TextStyle(color: Colors.black, fontSize: 14),), Divider(),
-              new Padding(padding: EdgeInsets.only(top: 7.0)),
-              new TextFormField(
-                decoration: new InputDecoration(
-                  labelText: "Emergency Contact person name",
-                  fillColor: Colors.white,
-                  border: new OutlineInputBorder(
-                    borderRadius: new BorderRadius.circular(9.0),
-                    borderSide: new BorderSide(),
-                  ),
-                  //fillColor: Colors.green
-                ),
-                validator: (val) {
-                  if (val.length == 0) {
-                    return "Phone number can't be left blank";
-                  } else {
-                    return null;
-                  }
-                },
-                keyboardType: TextInputType.text,
-                style: new TextStyle(
-                  fontFamily: "Poppins",
-                ),
+              Padding(padding: EdgeInsets.only(top: 10.0)),
+              Text(
+                'On emergency',
+                style: TextStyle(color: Colors.black, fontSize: 14),
               ),
-              new Padding(padding: EdgeInsets.only(top: 7.0)),
-              new TextFormField(
-                decoration: new InputDecoration(
-                  labelText: "Emergency Contact Number",
-                  fillColor: Colors.white,
-                  border: new OutlineInputBorder(
-                    borderRadius: new BorderRadius.circular(9.0),
-                    borderSide: new BorderSide(),
-                  ),
-                  //fillColor: Colors.green
-                ),
-                validator: (val) {
-                  if (val.length == 0) {
-                    return "Phone number can't be left blank";
-                  } else {
-                    return null;
-                  }
-                },
-                keyboardType: TextInputType.number,
-                style: new TextStyle(
-                  fontFamily: "Poppins",
-                ),
+              Divider(),
+              emergencyWidgets != null
+                  ? Column(
+                      children: emergencyWidgets,
+                    )
+                  : 0,
+              RaisedButton(onPressed: (){
+                setState(() {
+                  emergencyWidgets.add(emergencyWidgetItem(context));
+                });
+              },
+                color: ColorResources.themered,
+                child: Text('Add+',
+                style: TextStyle(
+                  color: ColorResources.white
+                ),),
               ),
-
-              new Padding(padding: EdgeInsets.only(top: 15.0)),
-               Center(
-                 child: SizedBox(
-                   width: 250,
-                   height: 50,
-
-                   child: RaisedButton(
-                     shape: RoundedRectangleBorder(
-                       borderRadius: new BorderRadius.circular(9.0),
-                       side: BorderSide(color: Colors.white),
-                     ),
-                    onPressed: () => print("Button Pressed"),
-                     color: ColorResources.themered,
-                    child: Text(
-                        'Save +',
-                        style: TextStyle(fontSize: 20, color:Colors.white)
+              Padding(padding: EdgeInsets.only(top: 15.0)),
+              Center(
+                child: SizedBox(
+                  width: 250,
+                  height: 50,
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(9.0),
+                      side: BorderSide(color: Colors.white),
                     ),
+                    onPressed: () => print("Button Pressed"),
+                    color: ColorResources.themered,
+                    child: Text('Save',
+                        style: TextStyle(fontSize: 20, color: Colors.white)),
+                  ),
+                ),
               ),
-                 ),
-               ),
+              Padding(padding: EdgeInsets.only(top: 15.0)),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget emergencyWidgetItem(BuildContext context) {
+    return Column(
+      children: [
+         Padding(padding: EdgeInsets.only(top: 7.0)),
+         TextFormField(
+          decoration:  InputDecoration(
+            labelText: "Emergency Contact person name",
+            fillColor: Colors.white,
+            border:  OutlineInputBorder(
+              borderRadius:  BorderRadius.circular(9.0),
+              borderSide:  BorderSide(),
+            ),
+            //fillColor: Colors.green
+          ),
+          validator: (val) {
+            if (val.length == 0) {
+              return "Phone number can't be left blank";
+            } else {
+              return null;
+            }
+          },
+          keyboardType: TextInputType.text,
+          style:  TextStyle(
+            fontFamily: "Poppins",
+          ),
+        ),
+         Padding(padding: EdgeInsets.only(top: 7.0)),
+         TextFormField(
+          decoration:  InputDecoration(
+            labelText: "Emergency Contact Number",
+            fillColor: Colors.white,
+            border:  OutlineInputBorder(
+              borderRadius:  BorderRadius.circular(9.0),
+              borderSide:  BorderSide(),
+            ),
+            //fillColor: Colors.green
+          ),
+          validator: (val) {
+            if (val.length == 0) {
+              return "Phone number can't be left blank";
+            } else {
+              return null;
+            }
+          },
+          keyboardType: TextInputType.number,
+          style:  TextStyle(
+            fontFamily: "Poppins",
+          ),
+        ),
+        Divider(
+        )
+      ],
+    ); 
   }
 }
