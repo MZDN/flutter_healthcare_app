@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_healthcare_app/src/model/service.dart';
-import 'package:flutter_healthcare_app/src/pages/sub_service_screen.dart';
+import 'package:flutter_healthcare_app/src/model/sub_service.dart';
 
 import 'package:flutter_healthcare_app/src/theme/light_color.dart';
 import 'package:flutter_healthcare_app/src/viewModel/service_view_model.dart';
 import 'package:provider/provider.dart';
 
-class ServicePage extends StatefulWidget {
+class SubServicePage extends StatefulWidget {
+  
+  String serviceId;
+
+
+  SubServicePage(this.serviceId);
+
   @override
-  _ServicePageState createState() => _ServicePageState();
+  _SubServicePageState createState() => _SubServicePageState();
 }
 
-class _ServicePageState extends State<ServicePage> {
+class _SubServicePageState extends State<SubServicePage> {
   var isFirst = true;
   var isLoading = true;
-  List<Service> serviceList = new List();
+  List<SubService> serviceList = new List();
   ServiceViewModel serviceViewModel;
 
   List<String> getListElements() {
@@ -32,7 +38,7 @@ class _ServicePageState extends State<ServicePage> {
   Widget build(BuildContext context) {
     serviceViewModel = Provider.of<ServiceViewModel>(context);
     if (isFirst) {
-      getAllServices(context);
+      getSubServices(context);
 
       setState(() {
         isFirst = false;
@@ -115,18 +121,12 @@ class _ServicePageState extends State<ServicePage> {
             ),
         itemCount: serviceList != null ?serviceList.length :0,
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: (){
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => SubServicePage(serviceList[index].id)));
-            },
-            child: ListTile(
-              title: Text('${serviceList[index].name}'),
-              leading: Icon(Icons.star),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                color: ColorResources.themered,
-              ),
+          return ListTile(
+            title: Text('${serviceList[index].servicecentername}'),
+            leading: Icon(Icons.star),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: ColorResources.themered,
             ),
           );
           Divider();
@@ -134,8 +134,8 @@ class _ServicePageState extends State<ServicePage> {
     return listview;
   }
 
-  void getAllServices(BuildContext context) async {
-    List<Service> services = await serviceViewModel.getAllService();
+  void getSubServices(BuildContext context) async {
+    List<SubService> services = await serviceViewModel.getSubService(widget.serviceId);
 
     if (services != null) {
       setState(() {
