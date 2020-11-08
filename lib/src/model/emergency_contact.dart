@@ -50,23 +50,19 @@ class Emergency {
 
 class EmergencyContactList {
   EmergencyContactList({
-    this.id,
     this.emergencycontactperson,
     this.emergencycontactphone,
   });
 
-  String id;
   String emergencycontactperson;
   String emergencycontactphone;
 
   factory EmergencyContactList.fromJson(Map<String, dynamic> json) => EmergencyContactList(
-    id: json["Id"],
     emergencycontactperson: json["Emergencycontactperson"],
     emergencycontactphone: json["Emergencycontactphone"],
   );
 
   Map<String, dynamic> toJson() => {
-    "Id": id,
     "Emergencycontactperson": emergencycontactperson,
     "Emergencycontactphone": emergencycontactphone,
   };
