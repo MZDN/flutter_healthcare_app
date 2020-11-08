@@ -14,6 +14,7 @@ class ContactInfo extends StatefulWidget {
 }
 
 class _ContactInfoState extends State<ContactInfo> {
+  static GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   AuthViewModel authViewModel;
   var userId;
   var isLoading = false;
@@ -37,6 +38,7 @@ class _ContactInfoState extends State<ContactInfo> {
   Widget build(BuildContext context) {
     authViewModel = Provider.of<AuthViewModel>(context);
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: GestureDetector(
@@ -207,7 +209,19 @@ class _ContactInfoState extends State<ContactInfo> {
                           borderRadius: BorderRadius.circular(9.0),
                           side: BorderSide(color: Colors.white),
                         ),
-                        onPressed: () => saveContact(context),
+                        onPressed: () {
+                          if(postalCodeController.text.isEmpty){
+                            showSnakbar(context, 'Please enter postal code');
+                          }else if(phoneNumberController.text.isEmpty){
+                            showSnakbar(context, 'Please enter phone number');
+                          }else if(addressController.text.isEmpty){
+                            showSnakbar(context, 'Please enter address');
+                          }else{
+                            saveContact(context);
+                          }
+
+
+    } ,
                         color: ColorResources.themered,
                         child: Text('Save',
                             style:
@@ -341,6 +355,16 @@ class _ContactInfoState extends State<ContactInfo> {
             ),
           )
         : Text('');
+  }
+
+
+  void showSnakbar(BuildContext context, String message) {
+    scaffoldKey.currentState.showSnackBar(new SnackBar(
+        backgroundColor: ColorResources.themered,
+        content: new Text(
+          message,
+          style: TextStyle(color: ColorResources.white),
+        )));
   }
 
   saveContact(BuildContext context) async {
